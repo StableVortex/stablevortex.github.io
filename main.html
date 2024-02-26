@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conqueror</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      header {
+        background: #f0f0f0;
+        padding: 10px 0;
+        text-align: right;
+        margin-bottom: 20px;
+      }
+      header a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: #333;
+      }
+      main {
+        text-align: center;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 20px;
+        padding: 20px;
+      }
+      .card {
+        position: relative;
+        padding-top: 50px;
+      }
+      .sub-card {
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        padding-bottom: 50px;
+      }
+      .sub-card .top-half {
+        height: 100px;
+        background-image: url("background.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+      .sub-card img.main-image {
+        width: 300px;
+        height: 300px;
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 100px;
+        top: -50px;
+      }
+      .card .content {
+        padding-top: 60px;
+        text-align: center;
+      }
+      .sub-card .content button {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      @media (max-width: 1200px) {
+        .grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 480px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="main.html">Challenges Grid</a>
+        <a href="summary.html">Summary</a>
+      </nav>
+    </header>
+    <main>
+      <h1>All Challenges</h1>
+      <section class="grid">
+        <div class="card">
+          <div class="sub-card">
+            <div class="top-half"></div>
+            <img src="image.png" class="main-image" alt="Main Image" />
+            <div class="content">
+              <h3 class="name">Angkor Wat</h3>
+              <h4 class="distance">20 mi / 32 km</h4>
+              <h4 class="price">300</h4>
+              <p class="description">4 Virtual podcast<br />Has street view</p>
+              <button class="add-challenge" onclick="addChallenge(this)">
+                Add challenge
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sub-card">
+            <div class="top-half"></div>
+            <img src="image2.png" class="main-image" alt="Main Image" />
+            <div class="content">
+              <h3 class="name">Mount Kilimanjaro</h3>
+              <h4 class="distance">20 mi / 32 km</h4>
+              <h4 class="price">400</h4>
+              <p class="description">4 Virtual podcast<br />Has street view</p>
+              <button class="add-challenge" onclick="addChallenge(this)">
+                Add challenge
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sub-card">
+            <div class="top-half"></div>
+            <img src="image3.png" class="main-image" alt="Main Image" />
+            <div class="content">
+              <h3 class="name">Inca Trail</h3>
+              <h4 class="distance">20 mi / 32 km</h4>
+              <h4 class="price">150</h4>
+              <p class="description">4 Virtual podcast<br />Has street view</p>
+              <button class="add-challenge" onclick="addChallenge(this)">
+                Add challenge
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sub-card">
+            <div class="top-half"></div>
+            <img src="image4.png" class="main-image" alt="Main Image" />
+            <div class="content">
+              <h3 class="name">Berlin Wall</h3>
+              <h4 class="distance">20 mi / 32 km</h4>
+              <h4 class="price">200</h4>
+              <p class="description">4 Virtual podcast<br />Has street view</p>
+              <button class="add-challenge" onclick="addChallenge(this)">
+                Add challenge
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="sub-card">
+            <div class="top-half"></div>
+            <img src="image5.png" class="main-image" alt="Main Image" />
+            <div class="content">
+              <h3 class="name">Flower Route</h3>
+              <h4 class="distance">20 mi / 32 km</h4>
+              <h4 class="price">100</h4>
+              <p class="description">4 Virtual podcast<br />Has street view</p>
+              <button class="add-challenge" onclick="addChallenge(this)">
+                Add challenge
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      function addChallenge(button) {
+        var card = button.parentElement;
+
+        var name = card.getElementsByClassName("name")[0].innerText;
+        var distance = card.getElementsByClassName("distance")[0].innerText;
+        var description =
+          card.getElementsByClassName("description")[0].innerText;
+        var price = card.getElementsByClassName("price")[0].innerText;
+
+        let challenges = JSON.parse(localStorage.getItem("challenges")) || [];
+
+        challenges.push({ name, description, price, distance });
+        localStorage.setItem("challenges", JSON.stringify(challenges));
+        alert("Product added!");
+      }
+    </script>
+  </body>
+</html>
