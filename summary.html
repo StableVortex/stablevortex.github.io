@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order summary</title>
+    <style>
+      header {
+        background: #f0f0f0;
+        padding: 10px 0;
+        text-align: right;
+        margin-bottom: 20px;
+      }
+      header a {
+        margin-right: 20px;
+        text-decoration: none;
+        color: #333;
+      }
+      main {
+        text-align: center;
+      }
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+      }
+      #order-summary {
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .challenge {
+        border-bottom: 1px solid #eee;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+      }
+      .challenge:last-child {
+        border-bottom: none;
+      }
+
+      button {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      window.onload = function () {
+        displayChallenges();
+      };
+
+      function displayChallenges() {
+        let challenges = JSON.parse(localStorage.getItem("challenges")) || [];
+        const container = document.getElementById("order-summary");
+        let total = 0;
+
+        challenges.forEach((challenge) => {
+          const challengeContainer = document.createElement("div");
+          challengeContainer.classList.add("challenge");
+          challengeContainer.innerHTML = `
+                    <h3>${challenge.name}</h3>
+                    <p>Distance: ${challenge.distance}</p>
+                    <p>Description: ${challenge.description}</p>
+                    <p>Price: ${challenge.price}</p>
+                `;
+          container.appendChild(challengeContainer);
+
+          total += parseFloat(challenge.price);
+        });
+        document.getElementById("total").innerHTML = `Total: ${total.toFixed(
+          2
+        )}`;
+      }
+
+      function clearChallenges() {
+        localStorage.removeItem("challenges");
+        document.getElementById("order-summary").innerHTML = "";
+        alert("The challenges were deleted!");
+        document.getElementById("total").innerHTML = `Total: 0`;
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="main.html">Challenges Grid</a>
+        <a href="summary.html">Summary</a>
+      </nav>
+    </header>
+    <main>
+      <div id="order-summary"></div>
+      <div id="total"></div>
+
+      <button onclick="clearChallenges()">Empty challenges</button>
+    </main>
+  </body>
+</html>
